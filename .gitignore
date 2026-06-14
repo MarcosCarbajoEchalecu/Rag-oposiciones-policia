@@ -1,0 +1,16 @@
+# Variables de entorno — NUNCA subir al repo
+.env
+.env.local
+.env.production
+
+# Credenciales y secretos
+secrets/
+credentials/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Temporales
+*.tmp
+*.log
