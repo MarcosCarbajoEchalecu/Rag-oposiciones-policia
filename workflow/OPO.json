@@ -1,0 +1,837 @@
+{
+  "name": "OPO",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.voice.data }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    },
+                    "id": "4548b403-795d-4f60-a601-23e0b1b4d83e"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8c844924-b2ed-48b0-935c-c66a8fd0c778",
+                    "leftValue": "={{ $json.text.data }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "81ed96ed-34a6-4110-84f9-f596ad453477",
+                    "leftValue": "={{ $json.image.data }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "exists",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a47a8b3d-8084-4fe6-abde-8ed159bb7aa5",
+      "name": "Switch1",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -736,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "66af0229-23ca-4a2c-9972-2e893af645a3",
+              "leftValue": "={{ $json.User.id }}",
+              "rightValue": 8461974239,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "cb053ea7-a548-43d3-933e-0768f64ee9d3",
+              "leftValue": "={{ $json.User.id }}",
+              "rightValue": " 5967147618",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -896,
+        464
+      ],
+      "id": "6a2f8b63-cf99-4d1b-8a94-c38f513c5e52",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
+              "name": "content",
+              "value": "={{ $json.text.data }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "175f372c-4558-4b7f-b3d3-81ac930755d9",
+      "name": "TEXT",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -432,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0e332454-b8da-4caf-a0e5-eafb60cc60eb",
+              "name": "content",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        352
+      ],
+      "id": "f9a1bcfe-a2e3-4fff-90c8-7fefe0e4036b",
+      "name": "AUDIO"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eb19a707-7cbb-4327-8375-cde8eb6eb6f8",
+              "name": "content",
+              "value": "=Imagen:{{ $json.content }}\nCaption: {{ $('data').item.json.image.caption }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -288,
+        544
+      ],
+      "id": "dc4311cb-c491-4f50-a85e-4bdea5faa213",
+      "name": "IMAGE"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "adb693bb-73ab-4511-a768-bff890980c60",
+              "name": "Chat_input",
+              "value": "={{ $json.content }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -128,
+        448
+      ],
+      "id": "ed0cc19b-8fa9-4227-a871-cd566641e393",
+      "name": "CHAT_INPUT"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "operation": "analyze",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "GPT-4O"
+        },
+        "text": "Describe la imagen al detalle estructurado con los aspectos mas importantes, Estructura las preguntas que extraigas y el output debes preguntas estructuradas, si no identificas preguntas debes de decir \"por favor comparte la imagen con mejor resolución\"",
+        "inputType": "base64",
+        "options": {}
+      },
+      "id": "d02aa937-eb2c-4814-aeb8-9ce4d1a269ad",
+      "name": "Analiza",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        -432,
+        592
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "XSlVLO0vclDjGkmb",
+          "name": "JOSE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.voice.data }}",
+        "additionalFields": {}
+      },
+      "id": "8978ed37-1bcb-406c-b7c7-0acf2df74cda",
+      "name": "Download File",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -576,
+        352
+      ],
+      "webhookId": "83bb7385-33f6-4105-8294-1a91c0ebbee5",
+      "credentials": {
+        "telegramApi": {
+          "id": "DoulxD0AVg1xxuJk",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7da5293a-b605-48a7-9b2d-d79a77a51a79",
+              "name": "User.id",
+              "value": "={{ $json.message.from.id }}",
+              "type": "number"
+            },
+            {
+              "id": "e3940b99-1d3c-41c9-acd2-8e67e34e2c17",
+              "name": "User.name",
+              "value": "={{ $json.message.chat.first_name }}",
+              "type": "string"
+            },
+            {
+              "id": "61163932-7eef-44b6-a0a3-6291871b607a",
+              "name": "text.data",
+              "value": "={{ $json.message.text }}",
+              "type": "string"
+            },
+            {
+              "id": "879612e0-c28f-48a7-a84f-087932431d89",
+              "name": "voice.data",
+              "value": "={{ $json.message.voice.file_id }}",
+              "type": "string"
+            },
+            {
+              "id": "d7a0724d-c764-4c74-91d2-1f348cdf473b",
+              "name": "image.data",
+              "value": "={{ $json.message.photo[3]?.file_id ? $json.message.photo[3].file_id : $json.message.photo[2].file_id }}",
+              "type": "string"
+            },
+            {
+              "id": "0c80fe94-ad0b-413b-a51a-854c9650fcd8",
+              "name": "image.caption",
+              "value": "={{ $json.message.caption }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1056,
+        464
+      ],
+      "id": "cf26c6ba-6644-415c-9bca-a49a0671be7d",
+      "name": "data"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.image.data }}",
+        "additionalFields": {
+          "mimeType": "image/jpeg"
+        }
+      },
+      "id": "b2d4b5f5-f354-41b0-b64c-096d77f09133",
+      "name": "Download File1",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -576,
+        544
+      ],
+      "webhookId": "83bb7385-33f6-4105-8294-1a91c0ebbee5",
+      "credentials": {
+        "telegramApi": {
+          "id": "DoulxD0AVg1xxuJk",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1216,
+        464
+      ],
+      "id": "d822752b-6c4a-42e3-bc9b-f05b1e16ec9e",
+      "name": "Telegram Trigger",
+      "webhookId": "eae65680-f950-441c-84c5-447fd40388c5",
+      "credentials": {
+        "telegramApi": {
+          "id": "DoulxD0AVg1xxuJk",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "=data",
+        "options": {}
+      },
+      "id": "87d87589-0c9f-489a-818b-774254db9ce4",
+      "name": "Transcribe",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.6,
+      "position": [
+        -432,
+        304
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "XSlVLO0vclDjGkmb",
+          "name": "JOSE"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        816
+      ],
+      "id": "4bbc633e-4d72-4b37-bd1b-80fd68dac6f8",
+      "name": "FIN RESPUESTA"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('CHAT_INPUT').item.json.Chat_input }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=# Rol\n\nEres un asistente experto en recuperación aumentada por generación (RAG). \nTu objetivo es responder preguntas del usuario de forma precisa, verificable y fundamentada exclusivamente en los fragmentos de contexto proporcionados.\n\n\n📌 Reglas principales:\n\n1. Recibirás preguntas tipo test (enunciado + opciones A/B/C).\n2. **Debes consultar SIEMPRE en secuencia las base de datos DB_SUPERMAN (Supabase).\n3. Nunca improvises ni uses conocimiento externo. Solo responde si aparece en las bases de datos oficiales.\n4. Si no hay coincidencias en ninguna de las dos bases, contesta exactamente:\n   “No hay información disponible en el temario oficial de oposiciones a Policía Nacional sobre esta consulta.”\n\n5. Tu respuesta debe seguir SIEMPRE la plantilla oficial:\n\n---\n**Resumen:** título breve de la pregunta.  \n**Respuesta:** opción correcta en formato A, B o C.  \n➡️ **Según el [tema / artículo / capítulo / disposición / ley del temario oficial]** → explicación breve, clara y didáctica.  \n---\n6. Debes incluir SIEMPRE:  \n   - La fuente exacta (artículo, disposición, tema o ley oficial).  \n   - La Respuesta Correcta y su explicación\n7. SOLO utiliza información explícitamente presente en los pasajes recuperados (contexto, Ordena los pasajes por relevancia semántica y coherencia, Fusiona información redundante y elimina inconsistencias antes de redactar la respuesta.\n8. Si un dato aparece en más de un pasaje, cita los más relevantes y evita redundancia.\n9. Antes de dar la respuesta final, valida si los pasajes seleccionados realmente responden a la consulta.\n---\n\n## 🔹 Ejemplo de respuesta a cada pregunta del usuario\n\n**Input (ejemplo recibido por el agente):**  \n2. ¿En qué plazo deberán las Administraciones educativas cumplir con el mandato del artículo 83.1 de la ley orgánica, según la disposición adicional vigésima primera?  \nA) En un plazo de seis meses desde la entrada en vigor.  \nB) En un plazo de un año desde la entrada en vigor.  \nC) En un plazo de dos años desde la entrada en vigor.  \n\n\n**Output Esperado:**  \nResumen: Plazo cumplimiento mandato art. 83.1 ley orgánica por las Administraciones educativas  \nRespuesta: B  \n➡️ Según la Disposición adicional vigésima primera de la LO 3/2018 → plazo de un año desde la entrada en vigor.  \n-------\n**Instrucciones:**  \n- Siempre consulta DB_SUPERMAN \n- Si no existe información, responde con el mensaje oficial de “No hay información disponible…”.  \n- Usa únicamente el temario oficial y no improvises.  \n- Respeta siempre el formato de plantilla.",
+          "enableStreaming": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        240,
+        448
+      ],
+      "id": "df2f08ea-29b0-44ed-b7df-b15c5f858708",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('data').item.json.User.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        576,
+        448
+      ],
+      "id": "126c0e5b-460f-4596-89b1-ddfa062f205a",
+      "name": "Send a text message",
+      "webhookId": "d4457452-8004-40aa-b89c-b321aec88c01",
+      "credentials": {
+        "telegramApi": {
+          "id": "DoulxD0AVg1xxuJk",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        32,
+        736
+      ],
+      "id": "df973ddf-0c51-4304-acb1-3cc2d51480fe",
+      "name": "4.1",
+      "credentials": {
+        "openAiApi": {
+          "id": "XSlVLO0vclDjGkmb",
+          "name": "JOSE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Recopila datos de la base vectorial sobre información legal de España, tienes disponible secciones y clasificación por número de artículos",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "topK": "={{ $json.documentos_recomendados }}",
+        "useReranker": true,
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1.3,
+      "position": [
+        464,
+        672
+      ],
+      "id": "41bc1ce0-c0d6-4b1c-ad9b-bf62a9b47a7c",
+      "name": "DB_SUPERMAN",
+      "credentials": {
+        "supabaseApi": {
+          "id": "8GO4ud79GP5qTUWW",
+          "name": "CNP_3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code node\n// Input: { Chat_input: \"texto con la consulta\" }\n// Output: { documentos_recomendados: <número> }\n\nfunction evaluarComplejidad(texto) {\n  const palabras = texto.split(/\\s+/).length;\n\n  // Palabras clave que indican alta complejidad\n  const keywords = [\"norma\", \"ley\", \"artículo\", \"reglamento\", \"procedimiento\", \"jurídico\", \"constitución\", \"contexto\"];\n  const contieneClave = keywords.some(k => texto.toLowerCase().includes(k));\n\n  if (palabras > 40 || contieneClave) return \"alta\";\n  if (palabras > 20) return \"media\";\n  return \"baja\";\n}\n\nfunction calcularDocumentos(complejidad) {\n  if (complejidad === \"alta\") return 5;   // Pregunta compleja\n  if (complejidad === \"media\") return 4;  // Pregunta intermedia\n  return 3;                               // Pregunta básica\n}\n\n// Entrada\nconst input = $json.Chat_input || \"\";\nconst complejidad = evaluarComplejidad(input);\nconst documentos = calcularDocumentos(complejidad);\n\nreturn {\n  documentos_recomendados: documentos,\n  complejidad: complejidad\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        448
+      ],
+      "id": "0259d91a-abe7-467d-9f35-d5c95be928d5",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "options": {
+          "timeout": -1
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        912
+      ],
+      "id": "3a1d984b-d23d-4f2f-93b2-d56cd8434626",
+      "name": "Embeddings SM",
+      "credentials": {
+        "openAiApi": {
+          "id": "XSlVLO0vclDjGkmb",
+          "name": "JOSE"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        176,
+        752
+      ],
+      "id": "4d55668f-c782-49c6-82ec-67f71ffd6d71",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "vKAmuo47wXWEMbxy",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.rerankerCohere",
+      "typeVersion": 1,
+      "position": [
+        688,
+        912
+      ],
+      "id": "acf91bf7-f6e9-4a6a-96ab-034896ad4c35",
+      "name": "Reranker Cohere",
+      "credentials": {
+        "cohereApi": {
+          "id": "NDlRdjA6TO5n1UYE",
+          "name": "CohereApi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch1": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "TEXT",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Download File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "FIN RESPUESTA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TEXT": {
+      "main": [
+        [
+          {
+            "node": "CHAT_INPUT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AUDIO": {
+      "main": [
+        [
+          {
+            "node": "CHAT_INPUT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IMAGE": {
+      "main": [
+        [
+          {
+            "node": "CHAT_INPUT",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CHAT_INPUT": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analiza": {
+      "main": [
+        [
+          {
+            "node": "IMAGE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "data": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File1": {
+      "main": [
+        [
+          {
+            "node": "Analiza",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Transcribe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe": {
+      "main": [
+        [
+          {
+            "node": "AUDIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4.1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DB_SUPERMAN": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings SM": {
+      "ai_embedding": [
+        [
+          {
+            "node": "DB_SUPERMAN",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Reranker Cohere": {
+      "ai_reranker": [
+        [
+          {
+            "node": "DB_SUPERMAN",
+            "type": "ai_reranker",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4ed235b2-8746-4fec-8ede-b3657a245d0a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f5cb83f0a09f75eadcc2cee64a2ed5127284186ce72387908d859c46f2fd1a10"
+  },
+  "id": "MhiC6fj4DtJAXzUw",
+  "tags": [
+    {
+      "createdAt": "2025-09-04T09:13:15.947Z",
+      "updatedAt": "2025-09-04T09:13:15.947Z",
+      "id": "kG9MmFrZ6MgWeFCh",
+      "name": "TEST"
+    }
+  ]
+}
